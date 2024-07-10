@@ -7,9 +7,9 @@ const taskToDone = (props) => {
         Aqui va ir una tabla con la lista de tareas por realizar con un boton para editar, marcar como completado y borrar.
         La idea es usar material UI
     */ 
-    <Table>
+    <table>
                
-    </Table>
+    </table>
   );
 }
 

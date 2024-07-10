@@ -7,9 +7,9 @@ const taskDone = (props) => {
         Aqui va ir una tabla con la lista de tareas ya realizadas con un boton para borrar.
         La idea es usar material UI
     */ 
-    <Table>
+    <table>
                
-    </Table>
+    </table>
   );
 }
 

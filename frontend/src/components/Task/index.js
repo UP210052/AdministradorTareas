@@ -1,2 +1,2 @@
-import taskView from "./TaskView";
+import taskView from "./taskView";
 export default taskView;

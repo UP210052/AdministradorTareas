@@ -1,19 +1,15 @@
 import React from 'react';
-import login from '../Login';
 import Navbar from '../Navbar';
-import proyectView from '../Proyect';
-import taskView from '../Task';
+import TaskView from '../Task';
+// import login from '../Login';
+// import proyectView from '../Proyect';
 
 
 function App() {
   return (
     <div className="App">
       <Navbar/>
-      {/*
-        <login/>
-        <proyectView/>
-        <taskView/>
-      */}
+      <TaskView />
     </div>
   );
 }

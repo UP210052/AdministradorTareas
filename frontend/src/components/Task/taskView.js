@@ -1,11 +1,7 @@
 import React from 'react';
-import taskAlert from "./taskAlert";
-import tasksToDo from "./taskToDo";
-import taskDone from "./taskDone";
-import taskForm from "./taskForm";
+import TaskToDo from './taskToDo';
 
-
-class taskView extends React.Component {
+class TaskView extends React.Component {
 
     renderSelectedButton = (selectedIdTask, actionDescription) => {
         this.setState({
@@ -17,16 +13,15 @@ class taskView extends React.Component {
     render() {
         return (
             <div>
-                {/* 
-                    Aqui mandamos a llamar los componentes de la vista task de momento, no sé cómo.
-                    Pienso que se llaman como etiquta.
-                    <taskDone></taskDone>
-                */}
-                
+                <TaskToDo></TaskToDo>
             </div>
         );
     }
 }
 
 
-export default taskView;
+export default TaskView;
+// import taskAlert from "./taskAlert";
+// import taskDone from "./taskDone";
+// import taskForm from "./taskForm";
+// import taskToDo from '../Task/taskToDo';

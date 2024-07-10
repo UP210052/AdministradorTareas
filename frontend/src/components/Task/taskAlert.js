@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const taskAlert = (props) => {
+const TaskAlert = (props) => {
   return (
     <div>
       <h3>Alerta</h3>
@@ -14,9 +14,9 @@ const taskAlert = (props) => {
   );
 }
 
-taskAlert.propTypes = {
+TaskAlert.propTypes = {
   description: PropTypes.string.isRequired,
   deleteFunction: PropTypes.any.isRequired
 }
 
-export default taskAlert;
+export default TaskAlert;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const taskDone = (props) => {
+const TaskDone = (props) => {
   return (
     /* 
         Aqui va ir una tabla con la lista de tareas ya realizadas con un boton para borrar.
@@ -13,9 +13,9 @@ const taskDone = (props) => {
   );
 }
 
-taskDone.propTypes = {
+TaskDone.propTypes = {
   idTask: PropTypes.string.isRequired,
   listTask: PropTypes.object.isRequired
 }
 
-export default taskDone;
+export default TaskDone;

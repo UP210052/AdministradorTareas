@@ -1,2 +1,3 @@
-import taskView from "./taskView";
-export default taskView;
+import TaskView from "./taskView";
+// export {default as taskToDo} from "./taskToDo"; 
+export default TaskView;

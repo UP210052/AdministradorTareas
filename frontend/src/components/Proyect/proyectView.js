@@ -1,8 +1,8 @@
 import React from 'react';
-import proyectForm from './proyectForm';
-import proyectList from './proyectList';
+import ProyectForm from './proyectForm';
+import ProyectList from './proyectList';
 
-class proyectView extends React.Component {
+class ProyectView extends React.Component {
 
     renderSelectedButton = (selectedIdProyect, actionDescription) => {
         this.setState({
@@ -25,4 +25,4 @@ class proyectView extends React.Component {
 }
 
 
-export default proyectView;
+export default ProyectView;

@@ -1,2 +1,2 @@
-import proyectView from "./proyectView";
-export default proyectView;
+import ProyectView from "./proyectView";
+export default ProyectView;

@@ -28,16 +28,18 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <navbar>
-        <li>
-          {menuItems.map(item => (
-            <ul key={item.id}
-              onClick={() => this.renderMenuItems(item.name)}>
-              {item.name}
-            </ul>
-          ))}
-        </li>
-      </navbar>
+        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav">
+                    {menuItems.map(item => (
+                        <li className="nav-item">
+                            <button className="nav-link active" aria-current="page" href={item.name} key={item.id} onClick={() => this.renderMenuItems(item.name)}>
+                            {item.name}</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </nav>
     );
   }
 }

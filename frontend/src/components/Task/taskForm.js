@@ -1,6 +1,6 @@
 import React from 'react';
 
-class taskForm extends React.Component {
+class TaskForm extends React.Component {
 
     renderSelectedDelete = (nameTask, descripcionTask, startDateTask, endDateTask, assignedTask) => {
         this.setState({
@@ -24,4 +24,4 @@ class taskForm extends React.Component {
     }
 }
 
-export default taskForm;
+export default TaskForm;

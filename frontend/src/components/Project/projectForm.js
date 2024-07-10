@@ -1,6 +1,6 @@
 import React from 'react';
 
-class ProyectForm extends React.Component {
+class ProjectForm extends React.Component {
 
     renderSelectedDelete = (nameProyect, descripcionProyect, startDateProyect, endDateProyect, assignedProyect) => {
         this.setState({
@@ -24,4 +24,4 @@ class ProyectForm extends React.Component {
     }
 }
 
-export default ProyectForm;
+export default ProjectForm;

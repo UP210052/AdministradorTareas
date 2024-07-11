@@ -1,5 +1,6 @@
 import React from 'react';
 import TaskToDo from './taskToDo';
+import TaskDone from './taskDone';
 
 class TaskView extends React.Component {
 
@@ -13,7 +14,8 @@ class TaskView extends React.Component {
     render() {
         return (
             <div>
-                <TaskToDo></TaskToDo>
+                <TaskToDo/>
+                <TaskDone/>
             </div>
         );
     }

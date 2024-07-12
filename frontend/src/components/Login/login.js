@@ -1,7 +1,7 @@
 import React from 'react';
 import loginform from './loginform';
 
-class login extends React.Component {
+class Login extends React.Component {
 
     renderMenuItems = (email, password) => {
       this.setState({
@@ -22,4 +22,4 @@ class login extends React.Component {
     }
     
 }
-export default login;
+export default Login;

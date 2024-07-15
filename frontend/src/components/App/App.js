@@ -1,17 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from '../Navbar';
 import TaskView from '../Task';
+import ProjectView from '../Project';
 import Login from '../Login';
-import LoginForm from '../Login/loginform';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar/>
-      {/*<TaskView />*/}
-      <LoginForm/>
-      <Login />
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/Task" element={<TaskView />} />
+        <Route path="/Project" element={<ProjectView />} />
+        <Route path="/Login" element={<Login />} />
+      </Routes>
+    </Router>
   );
 }
 

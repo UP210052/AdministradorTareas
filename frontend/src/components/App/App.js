@@ -11,8 +11,6 @@ function App() {
       {/*<TaskView />*/}
       <LoginForm/>
       <Login />
-      
-
     </div>
   );
 }

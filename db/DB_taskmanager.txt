@@ -1,0 +1,54 @@
+
+-- create database taskmanager;
+-- use taskmanager;
+
+
+-- Crear la tabla de Usuarios
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+-- Crear la tabla de Proyectos
+CREATE TABLE projects (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    start_date DATE,
+    end_date DATE,
+    leader_id INT,
+    FOREIGN KEY (leader_id) REFERENCES usuarios(id)
+);
+
+-- Crear la tabla de Tareas
+CREATE TABLE tasks (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    start_date DATE,
+    end_date DATE,
+    status VARCHAR(50),
+    project_id INT,
+    FOREIGN KEY (project_id) REFERENCES projects(id)
+);
+
+-- Crear la tabla intermedia para asignar proyectos a usuarios
+CREATE TABLE project_assignments (
+    project_id INT,
+    user_id INT,
+    PRIMARY KEY (project_id, user_id),
+    FOREIGN KEY (project_id) REFERENCES projects(id),
+    FOREIGN KEY (user_id) REFERENCES usuarios(id)
+);
+
+-- Crear la tabla intermedia para asignar tareas a usuarios
+CREATE TABLE task_assignments (
+    task_id INT,
+    user_id INT,
+    PRIMARY KEY (task_id, user_id),
+    FOREIGN KEY (task_id) REFERENCES tasks(id),
+    FOREIGN KEY (user_id) REFERENCES usuarios(id)
+);

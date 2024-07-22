@@ -3,6 +3,8 @@ package com.example.back.services;
 import com.example.back.models.UserModel;
 import com.example.back.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +15,19 @@ public class UserService {
 
     @Autowired
     IUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public List<UserModel> getUsers() {
         return (List<UserModel>) userRepository.findAll();
     }
 
     public UserModel saveUser(UserModel user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -27,12 +36,10 @@ public class UserService {
     }
 
     public UserModel updateById(UserModel request, Long id) {
-        UserModel user = userRepository.findById(id).get();
-
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        UserModel user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setNombre(request.getNombre());
+        user.setAdmin(request.isAdmin());
         userRepository.save(user);
 
         return user;
@@ -46,6 +53,9 @@ public class UserService {
         catch (Exception e) {
             return false;
         }
+    }
+    public UserModel findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
 }

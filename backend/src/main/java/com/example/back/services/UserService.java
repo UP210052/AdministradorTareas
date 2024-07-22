@@ -41,7 +41,6 @@ public class UserService {
         user.setNombre(request.getNombre());
         user.setAdmin(request.isAdmin());
         userRepository.save(user);
-
         return user;
     }
 

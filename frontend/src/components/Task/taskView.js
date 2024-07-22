@@ -15,6 +15,7 @@ class TaskView extends React.Component {
         return (
             <div>
                 <TaskToDo/>
+                <br />
                 <TaskDone/>
             </div>
         );

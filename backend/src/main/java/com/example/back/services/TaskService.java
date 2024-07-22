@@ -42,17 +42,15 @@ public class TaskService {
     };
     
     public List<Object[]> getTaskToDoByUser(Long id) {
-        List<Object[]> allTasks = taskRepository.getAllTasks();
+        List<Object[]> allTasks = taskRepository.getTasksByUserId(id);
         return allTasks.stream()
-                       .filter(task -> id.equals(((Number) task[6]).longValue()))
                        .filter(task -> "Pending".equals(task[5]))
                        .collect(Collectors.toList());
     };
 
     public List<Object[]> getTaskDoneByUser(Long id) {
-        List<Object[]> allTasks = taskRepository.getAllTasks();
+        List<Object[]> allTasks = taskRepository.getTasksByUserId(id);
         return allTasks.stream()
-                       .filter(task -> id.equals(((Number) task[6]).longValue()))
                        .filter(task -> "Finished".equals(task[5]))
                        .collect(Collectors.toList());
     };
@@ -110,7 +108,7 @@ public class TaskService {
     }
     public TaskModel updateStatusTask(Long id){
         TaskModel taskModel = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
-        taskModel.setStatus("Done");
+        taskModel.setStatus("Finished");
         taskRepository.saveAndFlush(taskModel);
         return taskModel;
     }

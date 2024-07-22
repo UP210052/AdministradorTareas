@@ -18,4 +18,9 @@ public class ProjectController {
     public List<ProjectModel> getProjects() {
         return this.projectService.getProjects();
     }
+
+    @GetMapping("/id")
+    public List<Object[]> getIdProjects() {
+        return this.projectService.getIdProject();
+    }
 }

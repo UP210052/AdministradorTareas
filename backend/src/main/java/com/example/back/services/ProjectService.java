@@ -15,4 +15,7 @@ public class ProjectService {
     public List<ProjectModel> getProjects(){
         return (List<ProjectModel>) projectRepository.findAll();
     }
+    public List<Object[]> getIdProject(){
+        return projectRepository.getIdProjects();
+    }
 }

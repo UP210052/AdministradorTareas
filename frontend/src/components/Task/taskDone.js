@@ -1,38 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import { DataGrid } from "@mui/x-data-grid";
 import { taskApiService } from '../../api';
 import TaskAlert from './taskAlert';  // Asegúrate de importar TaskAlert
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { useTaskContext } from '../../context/TaskContext';
 
 
 const TaskDone = () => {
-    const [tasks, setTasks] = useState([]);
+    const { tasksDone, updateTask } = useTaskContext();
     const [openAlert, setOpenAlert] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
 
-    useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const data = await taskApiService.getTasksDone();
-                const formattedData = data.map((task) => ({
-                    id: task[0],
-                    taskName: task[1],
-                    description: task[2],
-                    startDate: task[3],
-                    endDate: task[4],
-                    status: task[5],
-                    project: task[6],
-                    assign: task[7],
-                }));
-                setTasks(formattedData);
-            } catch (error) {
-                console.error("Error fetching tasks:", error);
-            }
-        };
-
-        fetchTasks();
-    }, []);
 
     const handleAction = (type, task) => {
         setSelectedTask(task);
@@ -45,7 +24,7 @@ const TaskDone = () => {
         if (selectedTask) {
             try {
                 await taskApiService.deleteTask(selectedTask.id);
-                setTasks(tasks.filter(task => task.id !== selectedTask.id));
+                updateTask();
             } catch (error) {
                 console.error("Error deleting task:", error);
             }
@@ -98,7 +77,7 @@ const TaskDone = () => {
             </AppBar>
             <div style={{ height: 290, width: "100%" }}>
                 <DataGrid
-                    rows={tasks}
+                    rows={tasksDone}
                     columns={columns}
                     initialState={{
                         pagination: {

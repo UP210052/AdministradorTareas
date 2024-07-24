@@ -1,6 +1,8 @@
 package com.example.back.models;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDate;
 import java.util.*;
 @Data
 @Entity
@@ -19,10 +21,10 @@ public class ProjectModel {
     private String description;
     
     @Column(name = "start_date")
-    private java.sql.Date startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private java.sql.Date endDate;
+    private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "leader_id")
@@ -31,6 +33,6 @@ public class ProjectModel {
 
     @ManyToMany
     @JoinTable(name ="project_assignments", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name= "user_id"))
-    private Set<UserModel> assignadosUsers;
+    private List<UserModel> assignadosUsers;
 
 }

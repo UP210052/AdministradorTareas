@@ -13,6 +13,7 @@ import com.example.back.services.ProjectService;
 
 @RestController
 @RequestMapping("/api/project")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProjectController {
     @Autowired
     private ProjectService projectService;

@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -47,6 +48,11 @@ public class UserController {
         else {
             return new ResponseEntity<>("User #"+id+" couldn't be removed.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/id")
+    public List<Object[]> getIdProjects() {
+        return this.userService.getIdTask();
     }
 
 }

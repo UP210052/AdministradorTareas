@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @Entity
 @Table(name = "projects")
@@ -19,7 +21,8 @@ public class ProjectModel {
     
     @Column
     private String description;
-    
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "start_date")
     private LocalDate startDate;
 

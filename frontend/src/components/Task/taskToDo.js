@@ -46,15 +46,36 @@ const TaskToDo = () => {
         }
     };
 
+    const handleTaskFormSubmit = async () => {
+        try {
+            const data = await taskApiService.getTasksToDo(); // Recuperar tareas actualizadas
+            const formattedData = data.map((task) => ({
+                id: task[0],
+                taskName: task[1],
+                description: task[2],
+                startDate: task[3],
+                endDate: task[4],
+                status: task[5],
+                project: task[6],
+                assign: task[7]
+            }));
+            setTasks(formattedData);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    };
+    
     const handleConfirmAction = async () => {
         try {
             if (actionType === 'delete') {
-                //await taskApiService.deleteTask(selectedTask.id);
-                // setTasks(tasks.filter(task => task.id !== selectedTask.id)); 
+                await taskApiService.deleteTask(selectedTask.id);
+                setTasks(tasks.filter(task => task.id !== selectedTask.id)); 
             } else if (actionType === 'complete') {
                 await taskApiService.completeTask(selectedTask.id); 
-                //setTasks(tasks.map(task => task.id === selectedTask.id ? { ...task, status: 'Completed' } : task ));
+                // setTasks(tasks.map(task => task.id === selectedTask.id ? { ...task, status: 'Completed' } : task ));
             }
+            // Actualizar la lista de tareas después de agregar o editar
+            await handleTaskFormSubmit();
         } catch (error) {
             console.error(`Error performing ${actionType} action:`, error);
         }
@@ -135,9 +156,8 @@ const TaskToDo = () => {
                 )}
                 {openModal.form && (
                     <TaskForm
-                        description={selectedTask?.description || ''}
                         actionType={actionType}
-                        confirmFunction={handleConfirmAction}
+                        confirmFunction={handleTaskFormSubmit}
                         closeFunction={handleCloseModal}
                         taskData={selectedTask} 
                     />

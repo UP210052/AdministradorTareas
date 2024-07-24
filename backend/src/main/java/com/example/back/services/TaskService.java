@@ -83,7 +83,6 @@ public class TaskService {
 
     public TaskModel updateTask(TaskDto task, Long id){
         TaskModel taskModel = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
-        taskModel.setId(task.getId());
         taskModel.setName(task.getName());
         taskModel.setDescription(task.getDescription());
         taskModel.setStartDate(task.getStartDate());
@@ -120,5 +119,23 @@ public class TaskService {
         catch (Exception e) {
             return false;
         }
+    }
+
+    public TaskDto getTaskById(long id){
+        TaskDto task = new TaskDto();
+        TaskModel taskModel = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setId(taskModel.getId());
+        task.setName(taskModel.getName());
+        task.setDescription(taskModel.getDescription());
+        task.setStartDate(taskModel.getStartDate());
+        task.setEndDate(taskModel.getEndDate());
+        task.setStatus(taskModel.getStatus());
+        task.setProjectId(taskModel.getProject().getId());
+        List<UserModel> users = taskModel.getUser();
+        List<Long> userIds = users.stream()
+            .map(UserModel::getId)
+            .collect(Collectors.toList());
+        task.setUserIds(userIds);
+        return task;
     }
 }

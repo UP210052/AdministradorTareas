@@ -15,6 +15,60 @@ const getTasksToDo = async () => {
     return data;
 };
 
+const getTaskById = async (id) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_URL}/task/${id}`, { 
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch task');
+    }
+    const data = await response.json();
+    
+    return data;
+};
+
+const createTask = async (taskData) => {
+    const token = localStorage.getItem('token'); 
+    const response = await fetch(`${API_URL}/task`, { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(taskData)
+    });
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create task');
+    }
+    const data = await response.json();
+    return data;
+};
+
+const updateTask = async (taskData, id) => {
+    const token = localStorage.getItem('token'); 
+    const response = await fetch(`${API_URL}/task/${id}`, { 
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(taskData)
+    });
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create task');
+    }
+    const data = await response.json();
+    return data;
+};
+
 const getTasksDone = async () => {
     const token = localStorage.getItem('token');
     const response = await fetch(`${API_URL}/task/allDone`, {
@@ -68,7 +122,10 @@ const completeTask = async (taskId) => {
     getTasksToDo,
     getTasksDone,
     deleteTask,
-    completeTask
+    completeTask,
+    getTaskById,
+    updateTask,
+    createTask
   };
 
   export default taskApiService;

@@ -5,7 +5,10 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.back.dto.ProjectDto;
+import com.example.back.dto.TaskDto;
 import com.example.back.models.ProjectModel;
+import com.example.back.models.TaskModel;
 import com.example.back.services.ProjectService;
 
 @RestController
@@ -22,5 +25,10 @@ public class ProjectController {
     @GetMapping("/id")
     public List<Object[]> getIdProjects() {
         return this.projectService.getIdProject();
+    }
+
+    @PostMapping
+    public ProjectModel saveTask(@RequestBody ProjectDto project) {
+        return this.projectService.createProject(project);
     }
 }

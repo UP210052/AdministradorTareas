@@ -1,8 +1,101 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, TextField, Select, MenuItem, FormControl, InputLabel, Grid, Box } from '@mui/material';
+import { projectApiService, taskApiService, usersApiService } from '../../api';
 
-const TaskForm = ({ description, actionType, closeFunction }) => {
+const TaskForm = ({ taskData, actionType, confirmFunction, closeFunction }) => {
+    const [projects, setProjects] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [formData, setFormData] = useState({
+        id: 0,
+        name: '',
+        description:'',
+        startDate: '',
+        endDate: '',
+        status: '',
+        projectId: '',
+        userIds: []
+    });
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const data = await projectApiService.getIdProject();
+                setProjects(data);
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+        };
+
+        const fetchUsers = async () => {
+            try {
+                const data = await usersApiService.getIdUsers();
+                setUsers(data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchProjects();
+        fetchUsers();
+    }, []);
+
+    useEffect(() => {
+        if (actionType === 'edit' && taskData && taskData.id) {
+            const fetchTask = async () => {
+                try {
+                    const data = await taskApiService.getTaskById(taskData.id);
+                    setFormData(data);
+                } catch (error) {
+                    console.error('Error fetching task:', error);
+                }
+            };
+            fetchTask();
+        } else {
+            setFormData({
+                id: 0,
+                name: '',
+                description: '',
+                startDate: '',
+                endDate: '',
+                status: '',
+                projectId: '',
+                userIds: []
+            });
+        }
+    }, [actionType, taskData]);
+
+    const handleChange = (id) => (event) => {
+        const { value } = event.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [id]: value
+        }));
+    };
+
+    const handleMultipleChange = (id) => (event) => {
+        const { value } = event.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [id]: value 
+        }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            if (actionType === 'add') {
+                await taskApiService.createTask(formData);
+            } else if (actionType === 'edit') {
+                await taskApiService.updateTask(formData, formData.id);
+            }
+            confirmFunction();
+            closeFunction();
+        } catch (error) {
+            console.error('Error saving task:', error);
+            alert('Failed to save task');
+        }
+    };
+
     return (
         <Modal open={true} onClose={closeFunction} aria-labelledby="task-form-title" aria-describedby="task-form-description">
 
@@ -23,12 +116,14 @@ const TaskForm = ({ description, actionType, closeFunction }) => {
                 <h2 id="task-form-title" style={{ fontSize: '1.25rem' }}>
                     {actionType === 'add' ? 'Add New Task' : 'Edit Task'}
                 </h2>
-                <form id="taskForm">
+                <form id="taskForm" onSubmit={handleSubmit}>
                     <TextField
                         label="Task Name"
-                        id="taskName"
+                        id="name"
                         fullWidth
                         margin="normal"
+                        value={formData.name}
+                        onChange={handleChange("name")}
                         InputProps={{ style: { fontSize: '0.875rem' } }}
                     />
                     <TextField
@@ -38,6 +133,8 @@ const TaskForm = ({ description, actionType, closeFunction }) => {
                         rows={3}
                         fullWidth
                         margin="normal"
+                        value={formData.description}
+                        onChange={handleChange("description")}
                         InputProps={{ style: { fontSize: '0.875rem' } }}
                     />
                     <Grid container spacing={2}>
@@ -48,6 +145,8 @@ const TaskForm = ({ description, actionType, closeFunction }) => {
                                 type="date"
                                 fullWidth
                                 margin="normal"
+                                value={formData.startDate}
+                                onChange={handleChange("startDate")}
                                 InputLabelProps={{ shrink: true }}
                                 InputProps={{ style: { fontSize: '0.875rem' } }}
                             />
@@ -59,6 +158,8 @@ const TaskForm = ({ description, actionType, closeFunction }) => {
                                 type="date"
                                 fullWidth
                                 margin="normal"
+                                value={formData.endDate}
+                                onChange={handleChange("endDate")}
                                 InputLabelProps={{ shrink: true }}
                                 InputProps={{ style: { fontSize: '0.875rem' } }}
                             />
@@ -71,10 +172,12 @@ const TaskForm = ({ description, actionType, closeFunction }) => {
                                 <Select
                                     labelId="status-label"
                                     id="status"
+                                    value={formData.status}
+                                    onChange={handleChange("status")}
                                     style={{ fontSize: '0.875rem' }}
                                 >
-                                    <MenuItem value="Pending" style={{ fontSize: '0.875rem' }}>Pending</MenuItem>
-                                    <MenuItem value="Finished" style={{ fontSize: '0.875rem' }}>Finished</MenuItem>
+                                    <MenuItem id="status" value="Pending" style={{ fontSize: '0.875rem' }}>Pending</MenuItem>
+                                    <MenuItem id="status" value="Finished" style={{ fontSize: '0.875rem' }}>Finished</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -85,10 +188,14 @@ const TaskForm = ({ description, actionType, closeFunction }) => {
                                     labelId="projectId-label"
                                     id="projectId"
                                     style={{ fontSize: '0.875rem' }}
+                                    onChange={handleChange("projectId")}
+                                    value={formData.projectId}
                                 >
-                                    <MenuItem value="1" style={{ fontSize: '0.875rem' }}>Project 1</MenuItem>
-                                    <MenuItem value="2" style={{ fontSize: '0.875rem' }}>Project 2</MenuItem>
-                                    <MenuItem value="3" style={{ fontSize: '0.875rem' }}>Project 3</MenuItem>
+                                    {projects.map((project) => (
+                                        <MenuItem key={project[0]} value={project[0]} style={{ fontSize: '0.875rem' }}>
+                                            {project[1]}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -97,18 +204,22 @@ const TaskForm = ({ description, actionType, closeFunction }) => {
                         <InputLabel id="assign-label" style={{ fontSize: '0.875rem' }}>Assignees</InputLabel>
                         <Select
                             labelId="assign-label"
-                            id="assign"
+                            id="userIds"
                             multiple
                             style={{ fontSize: '0.875rem' }}
+                            value={formData.userIds}
+                            onChange={handleMultipleChange("userIds")}
                             defaultValue={[]} 
                         >
-                            <MenuItem value="user1" style={{ fontSize: '0.875rem' }}>User 1</MenuItem>
-                            <MenuItem value="user2" style={{ fontSize: '0.875rem' }}>User 2</MenuItem>
-                            <MenuItem value="user3" style={{ fontSize: '0.875rem' }}>User 3</MenuItem>
+                            {users.map((user) => (
+                                <MenuItem key={user[0]} value={user[0]} style={{ fontSize: '0.875rem' }}>
+                                    {user[1]}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                     <Box sx={{ mt: 2, textAlign: 'right' }}>
-                        <Button variant="contained" color="success" style={{ marginRight: 10 }}>
+                        <Button type="submit" variant="contained" color="success" style={{ marginRight: 10 }}>
                             Save Task
                         </Button>
                         <Button variant="contained" color="error" onClick={closeFunction}>
@@ -123,7 +234,6 @@ const TaskForm = ({ description, actionType, closeFunction }) => {
 
 TaskForm.propTypes = {
     taskData: PropTypes.object,
-    description: PropTypes.string,
     actionType: PropTypes.string.isRequired,
     closeFunction: PropTypes.func.isRequired
 };

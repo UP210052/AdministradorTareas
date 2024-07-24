@@ -2,6 +2,8 @@ package com.example.back.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @Entity
 @Table(name = "projects")
@@ -17,10 +19,12 @@ public class ProjectModel {
     
     @Column
     private String description;
-    
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "start_date")
     private java.sql.Date startDate;
-
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "end_date")
     private java.sql.Date endDate;
 

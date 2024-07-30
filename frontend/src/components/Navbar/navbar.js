@@ -1,25 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, Button } from '@mui/material';
 
 const menuItems = [
   {
     id: 1,
     name: 'Task',
     path: '/task',
-    position: null,
   },
   {
     id: 2,
-    name: 'Proyect',
+    name: 'Project',
     path: '/project',
-    position: null,
   },
   {
     id: 3,
     name: 'Login',
     path: '/login',
-    position: 'right',
-  }
+  },
 ];
 
 class Navbar extends React.Component {
@@ -31,19 +29,21 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            {menuItems.map(item => (
-              <li className="nav-item" key={item.id}>
-                <Link className="nav-link" to={item.path} onClick={() => this.renderMenuItems(item.name)}>
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
+      <AppBar position="static">
+        <Toolbar>
+          {menuItems.map(item => (
+            <Button
+              key={item.id}
+              color="inherit"
+              component={Link}
+              to={item.path}
+              onClick={() => this.renderMenuItems(item.name)}
+            >
+              {item.name}
+            </Button>
+          ))}
+        </Toolbar>
+      </AppBar>
     );
   }
 }

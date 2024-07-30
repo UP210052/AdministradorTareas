@@ -55,7 +55,6 @@ public class TaskService {
                        .collect(Collectors.toList());
     };
 
-    // Crear un  convertidor dto a taskmodel y uno al reves 
     public TaskModel saveTask(TaskDto task){
         TaskModel taskModel = new TaskModel();
         taskModel.setId(task.getId());

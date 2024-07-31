@@ -11,24 +11,24 @@ import java.util.*;
 @Repository
 public interface TaskRepository extends JpaRepository<TaskModel, Long> {
     /*
-    SELECT 
-        tasks.id, 
-        tasks.name, 
-        tasks.description, 
-        tasks.start_date, 
-        tasks.end_date, 
-        tasks.status, 
+    SELECT
+        tasks.id,
+        tasks.name,
+        tasks.description,
+        tasks.start_date,
+        tasks.end_date,
+        tasks.status,
         projects.name AS project_name,
         GROUP_CONCAT(usuarios.name SEPARATOR ', ') AS assigned_users
-    FROM 
+    FROM
         tasks
-    JOIN 
+    JOIN
         task_assignments ON tasks.id = task_assignments.task_id
     JOIN
         usuarios ON task_assignments.user_id = usuarios.id
     JOIN
         projects ON tasks.project_id = projects.id  -- Unión con la tabla de proyectos
-    GROUP BY 
+    GROUP BY
         tasks.id, tasks.name, tasks.description, tasks.start_date, tasks.end_date, tasks.status, projects.name;
      */
     @Query(value = "SELECT tasks.id, tasks.name, tasks.description, tasks.start_date, tasks.end_date, tasks.status, projects.name AS project_name, GROUP_CONCAT(usuarios.name SEPARATOR ', ') AS assigned_users FROM tasks JOIN task_assignments ON tasks.id = task_assignments.task_id JOIN usuarios ON task_assignments.user_id = usuarios.id JOIN projects ON tasks.project_id = projects.id GROUP BY tasks.id, tasks.name, tasks.description, tasks.start_date, tasks.end_date, tasks.status, projects.name;", nativeQuery = true)

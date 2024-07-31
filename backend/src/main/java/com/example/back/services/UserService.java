@@ -51,7 +51,7 @@ public class UserService {
             return false;
         }
     }
-    public UserModel findByEmail(String email) {
+    public Optional<UserModel> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 

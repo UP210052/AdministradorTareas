@@ -12,6 +12,7 @@ import com.example.back.services.TaskService;
 
 @RestController
 @RequestMapping("/api/task")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TaskController {
     @Autowired
     private TaskService taskService;
@@ -20,6 +21,8 @@ public class TaskController {
     public List<TaskModel> getTasks() {
         return this.taskService.getTasks();
     }
+
+
     @GetMapping("/allToDo")
     public List<Object[]> getTaskToDo(){
         return this.taskService.getTaskToDo();
@@ -39,11 +42,12 @@ public class TaskController {
     public List<Object[]> getTaskDoneByUser(@PathVariable("id") Long id){
         return this.taskService.getTaskDoneByUser(id);
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public TaskModel saveTask(@RequestBody TaskDto task) {
         return this.taskService.saveTask(task);
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(path = "/{id}")
     public TaskModel updateTask(@RequestBody TaskDto task, @PathVariable("id") Long id){
         return this.taskService.updateTask(task, id);
@@ -53,6 +57,12 @@ public class TaskController {
     public TaskModel setDoneTask(@PathVariable("id") Long id){
         return this.taskService.updateStatusTask(id);
     }
+
+    @GetMapping(path = "/{id}")
+    public TaskDto getTaskById(@PathVariable("id") Long id){
+        return this.taskService.getTaskById(id);
+    }
+
     @DeleteMapping(path = "/{id}")
     public Boolean deleteTask(@PathVariable("id") Long id) {
         return this.taskService.deleteTask(id);

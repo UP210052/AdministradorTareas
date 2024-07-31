@@ -124,6 +124,77 @@ public class ProjectService {
         projectRepository.saveAndFlush(projectModel);
         return projectModel;
     }
+    public List<Object[]> getIdProject(){
+        return projectRepository.getIdProjects();
+    }
+
+    public ProjectModel createProject (ProjectDto project)  {
+        ProjectModel projectModel = new ProjectModel();
+        projectModel.setId(project.getId());
+        projectModel.setDescription(project.getDescription());
+        projectModel.setEndDate(project.getEndDate());
+        projectModel.setName(project.getName());
+        projectModel.setStartDate(project.getStartDate());
+        if (project.getUserLeaderId() == null) {
+            throw new RuntimeException("Leader ID must not be null");
+        }
+        Optional<UserModel> optionalUser = iUserRepository.findById(project.getUserLeaderId());
+        if (optionalUser.isPresent()) {
+            projectModel.setUserLeader(optionalUser.get());
+        } else {
+            throw new RuntimeException("User not found with id: " + project.getUserLeaderId());
+        }
+        if (project.getUserIds() == null || project.getUserIds().isEmpty()) {
+            throw new RuntimeException("User IDs must not be null or empty");
+        }
+        List<UserModel> users = iUserRepository.findAllById(project.getUserIds());
+        projectModel.setAssignadosUsers(users);
+        projectRepository.saveAndFlush(projectModel);
+        return projectModel;
+    }
+
+    public List<Map<String, Object>> getProjectsAndTask() {
+        List<Object[]> projectTask = projectRepository.getProjectAndLeader();
+        List<Map<String, Object>> result = new ArrayList<>();
+    
+        for (Object[] project : projectTask) {
+            Integer projectId = (Integer) project[0];
+            
+            List<Object[]> taskList = taskRepository.getTaskbyProjectId(projectId);
+            List<Map<String, Object>> tasks = new ArrayList<>();
+            
+            for (Object[] task : taskList) {
+                Map<String, Object> taskData = new HashMap<>();
+                taskData.put("taskId", task[0]);
+                taskData.put("taskName", task[1]);
+                taskData.put("startDate", task[2]);
+                taskData.put("endDate", task[3]);
+                taskData.put("status", task[4]);
+                taskData.put("assignedUsers", task[5]);
+                tasks.add(taskData);
+            }
+            
+            Map<String, Object> projectData = new HashMap<>();
+            projectData.put("projectId", projectId);
+            projectData.put("projectName", project[1]);
+            projectData.put("leaderName", project[2]);
+            projectData.put("tasks", tasks);
+            
+            result.add(projectData);
+        }
+    
+        return result;
+    }
+    
+    public Boolean deleteProject(Long id){
+        try {
+            projectRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
 }
 
 

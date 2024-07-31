@@ -16,7 +16,6 @@ public class UserService {
     IUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public UserService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
@@ -40,7 +39,6 @@ public class UserService {
         user.setNombre(request.getNombre());
         user.setAdmin(request.isAdmin());
         userRepository.save(user);
-
         return user;
     }
 
@@ -55,6 +53,10 @@ public class UserService {
     }
     public Optional<UserModel> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public List<Object[]> getIdTask(){
+        return userRepository.getIdTask();
     }
 
 }

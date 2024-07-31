@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -63,6 +64,7 @@ public class UserController {
     public ResponseEntity<List<UserModel>> allUsers() {
         List<UserModel> users = userService.getUsers();
         return ResponseEntity.ok(users);
+
     }
 
 }

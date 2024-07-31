@@ -15,6 +15,7 @@ class TaskView extends React.Component {
         return (
             <div>
                 <TaskToDo/>
+                <br />
                 <TaskDone/>
             </div>
         );
@@ -23,7 +24,3 @@ class TaskView extends React.Component {
 
 
 export default TaskView;
-// import taskAlert from "./taskAlert";
-// import taskDone from "./taskDone";
-// import taskForm from "./taskForm";
-// import taskToDo from '../Task/taskToDo';

@@ -41,7 +41,7 @@ public class ProjectController {
     public Boolean deleteTask(@PathVariable("id") Long id) {
         return this.projectService.deleteProject(id);
     }
-
+  
     @PutMapping(path = "/{id}")
     public ResponseEntity<ProjectModel> modifyProject(@PathVariable("id") Long id, @RequestBody ProjectDto project) {
         ProjectModel projectModel = this.projectService.modifyProject(id, project);

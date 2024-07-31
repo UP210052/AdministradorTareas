@@ -1,71 +1,108 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { DataGrid } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
+import React, { useState } from 'react';
+import PropTypes from "prop-types";
+import { DataGrid } from "@mui/x-data-grid";
+import { taskApiService } from '../../api';
+import TaskAlert from './taskAlert';  // Asegúrate de importar TaskAlert
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { useTaskContext } from '../../context/TaskContext';
 
-const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'taskName', headerName: 'Task name', width: 130 },
-    { field: 'description', headerName: 'Description', width: 180 },
-    { field: 'startDate', headerName: 'Start date', width: 130 },
-    { field: 'endDate', headerName: 'End date', width: 130 },
-    { field: 'assign', headerName: 'Asing', width: 130 },
-    { field: 'project', headerName: 'Project', width: 130 },
-    {
-        field: 'actions',
-        headerName: 'Actions',
-        width: 100,
-        renderCell: (params) => (
-            <div>
-                <Button variant="contained" color="error" size="small" onClick={() => buttonDelete(params.id)} >
-                    Delete
-                </Button>
+
+const TaskDone = () => {
+    const { tasksDone, updateTask } = useTaskContext();
+    const [openAlert, setOpenAlert] = useState(false);
+    const [selectedTask, setSelectedTask] = useState(null);
+
+
+    const handleAction = (type, task) => {
+        setSelectedTask(task);
+        if (type === 'delete') {
+            setOpenAlert(true);
+        }
+    };
+
+    const handleConfirmDelete = async () => {
+        if (selectedTask) {
+            try {
+                await taskApiService.deleteTask(selectedTask.id);
+                updateTask();
+            } catch (error) {
+                console.error("Error deleting task:", error);
+            }
+            setOpenAlert(false);
+            setSelectedTask(null);
+        }
+    };
+
+    const handleCloseAlert = () => {
+        setOpenAlert(false);
+        setSelectedTask(null);
+    };
+
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 50 },
+        { field: 'taskName', headerName: 'Task name', width: 130 },
+        { field: 'description', headerName: 'Description', width: 220 },
+        { field: 'startDate', headerName: 'Start date', width: 100 },
+        { field: 'endDate', headerName: 'End date', width: 100 },
+        { field: 'status', headerName: 'Status', width: 80 },
+        { field: 'project', headerName: 'Project name', width: 180 },
+        { field: 'assign', headerName: 'Assign', width: 180 },
+        {
+            field: "actions",
+            headerName: "Actions",
+            width: 100,
+            renderCell: (params) => (
+                <div>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        size="small"
+                        onClick={() => handleAction('delete', params.row)}
+                    >
+                        Delete
+                    </Button>
+                </div>
+            ),
+        },
+    ];
+    
+    return (
+        <div>
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        Task Done
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <div style={{ height: 290, width: "100%" }}>
+                <DataGrid
+                    rows={tasksDone}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 5 },
+                        },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                />
             </div>
-        ),
-    },
-];
 
-const rows = [
-    {
-        id: 1, taskName: 'Setup Environment', description: 'Setup development environment for the project', 
-        startDate: '2024-07-01', endDate: '2024-07-03', assign: 'Alice', project: 'Project Alpha',
-    },
-    {
-        id: 2, taskName: 'Design UI', description: 'Design user interface for the application', 
-        startDate: '2024-07-04', endDate: '2024-07-10', assign: 'Bob', project: 'Project Beta',
-    },
-];
-
-const buttonDelete = (id) => {
-    alert(`Delete task with ID: ${id}`);
+            {openAlert && (
+                <TaskAlert
+                    description={selectedTask?.description || ''}
+                    actionType="delete"
+                    confirmFunction={handleConfirmDelete}
+                    closeFunction={handleCloseAlert}
+                />
+            )}
+        </div>
+    );
 };
 
-
-const TaskDone = (props) => {
-  return (
-    <div style={{ height: 290, width: '100%' }}>
-        <br/>
-        <br/>
-        <br/>
-        <h2>Tasks done</h2>
-        <button>+</button>
-        <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{
-                pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-                },
-            }}
-            pageSizeOptions={[5, 10]}
-        />
-    </div>
-  );
-}
-
 TaskDone.propTypes = {
-  idTask: PropTypes.string.isRequired,
-  listTask: PropTypes.object.isRequired
-}
+    idTask: PropTypes.string,
+    listTask: PropTypes.object,
+};
 
 export default TaskDone;

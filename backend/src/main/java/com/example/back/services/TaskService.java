@@ -42,22 +42,19 @@ public class TaskService {
     };
     
     public List<Object[]> getTaskToDoByUser(Long id) {
-        List<Object[]> allTasks = taskRepository.getAllTasks();
+        List<Object[]> allTasks = taskRepository.getTasksByUserId(id);
         return allTasks.stream()
-                       .filter(task -> id.equals(((Number) task[6]).longValue()))
                        .filter(task -> "Pending".equals(task[5]))
                        .collect(Collectors.toList());
     };
 
     public List<Object[]> getTaskDoneByUser(Long id) {
-        List<Object[]> allTasks = taskRepository.getAllTasks();
+        List<Object[]> allTasks = taskRepository.getTasksByUserId(id);
         return allTasks.stream()
-                       .filter(task -> id.equals(((Number) task[6]).longValue()))
                        .filter(task -> "Finished".equals(task[5]))
                        .collect(Collectors.toList());
     };
 
-    // Crear un  convertidor dto a taskmodel y uno al reves 
     public TaskModel saveTask(TaskDto task){
         TaskModel taskModel = new TaskModel();
         taskModel.setId(task.getId());
@@ -85,7 +82,6 @@ public class TaskService {
 
     public TaskModel updateTask(TaskDto task, Long id){
         TaskModel taskModel = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
-        taskModel.setId(task.getId());
         taskModel.setName(task.getName());
         taskModel.setDescription(task.getDescription());
         taskModel.setStartDate(task.getStartDate());
@@ -110,7 +106,7 @@ public class TaskService {
     }
     public TaskModel updateStatusTask(Long id){
         TaskModel taskModel = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
-        taskModel.setStatus("Done");
+        taskModel.setStatus("Finished");
         taskRepository.saveAndFlush(taskModel);
         return taskModel;
     }
@@ -122,5 +118,23 @@ public class TaskService {
         catch (Exception e) {
             return false;
         }
+    }
+
+    public TaskDto getTaskById(long id){
+        TaskDto task = new TaskDto();
+        TaskModel taskModel = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setId(taskModel.getId());
+        task.setName(taskModel.getName());
+        task.setDescription(taskModel.getDescription());
+        task.setStartDate(taskModel.getStartDate());
+        task.setEndDate(taskModel.getEndDate());
+        task.setStatus(taskModel.getStatus());
+        task.setProjectId(taskModel.getProject().getId());
+        List<UserModel> users = taskModel.getUser();
+        List<Long> userIds = users.stream()
+            .map(UserModel::getId)
+            .collect(Collectors.toList());
+        task.setUserIds(userIds);
+        return task;
     }
 }

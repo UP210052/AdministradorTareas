@@ -26,7 +26,11 @@ function Copyright(props) {
   );
 }
 
-const defaultTheme = createTheme();
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 class Login extends React.Component {
   constructor(props) {
@@ -52,7 +56,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={darkTheme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
@@ -79,6 +83,7 @@ class Login extends React.Component {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                InputLabelProps={{ style: { color: '#fff' } }} // Color de la etiqueta en modo oscuro
               />
               <TextField
                 margin="normal"
@@ -89,6 +94,7 @@ class Login extends React.Component {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                InputLabelProps={{ style: { color: '#fff' } }} // Color de la etiqueta en modo oscuro
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -104,12 +110,12 @@ class Login extends React.Component {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="#" variant="body2" color="primary">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="#" variant="body2" color="primary">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -122,4 +128,5 @@ class Login extends React.Component {
     );
   }
 }
+
 export default Login;

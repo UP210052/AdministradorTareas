@@ -3,7 +3,6 @@ package com.example.back.services;
 import com.example.back.models.UserModel;
 import com.example.back.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,6 @@ public class UserService {
     IUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public UserService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
@@ -53,12 +51,7 @@ public class UserService {
             return false;
         }
     }
-    public UserModel findByEmail(String email) {
+    public Optional<UserModel> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
-    public List<Object[]> getIdTask(){
-        return userRepository.getIdTask();
-    }
-
 }

@@ -18,7 +18,7 @@ public class ProjectModel {
 
     @Column
     private String name;
-    
+
     @Column
     private String description;
 
@@ -32,7 +32,7 @@ public class ProjectModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "leader_id")
     private UserModel userLeader;
-    
+
 
     @ManyToMany
     @JoinTable(name ="project_assignments", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name= "user_id"))

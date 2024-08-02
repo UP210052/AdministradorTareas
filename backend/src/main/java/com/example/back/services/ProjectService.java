@@ -27,36 +27,6 @@ public class ProjectService {
         return projectRepository.getIdP();
     }
 
-    public ProjectModel modifyProject(Long id, ProjectDto project) {
-        ProjectModel projectModel = projectRepository.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
-
-        projectModel.setName(project.getName());
-        projectModel.setDescription(project.getDescription());
-        projectModel.setStartDate(project.getStartDate());
-        projectModel.setEndDate(project.getEndDate());
-
-        if (project.getUserLeaderId() == null) {
-            throw new RuntimeException("Leader ID must not be null");
-        }
-
-        Optional<UserModel> optionalUser = iUserRepository.findById(project.getUserLeaderId());
-        if (optionalUser.isPresent()) {
-            projectModel.setUserLeader(optionalUser.get());
-        } else {
-            throw new RuntimeException("User not found with id: " + project.getUserLeaderId());
-        }
-
-        if (project.getUserIds() != null && !project.getUserIds().isEmpty()) {
-            List<UserModel> users = iUserRepository.findAllById(project.getUserIds());
-            projectModel.setAssignadosUsers(users);
-        } else {
-            projectModel.setAssignadosUsers(Collections.emptyList());
-        }
-
-        projectRepository.saveAndFlush(projectModel);
-        return projectModel;
-    }
-    
     public ProjectModel createProject (ProjectDto project)  {
         ProjectModel projectModel = new ProjectModel();
         projectModel.setId(project.getId());
@@ -85,13 +55,13 @@ public class ProjectService {
     public List<Map<String, Object>> getProjectsAndTask() {
         List<Object[]> projectTask = projectRepository.getProjectAndLeader();
         List<Map<String, Object>> result = new ArrayList<>();
-    
+
         for (Object[] project : projectTask) {
             Integer projectId = (Integer) project[0];
-            
+
             List<Object[]> taskList = taskRepository.getTaskbyProjectId(projectId);
             List<Map<String, Object>> tasks = new ArrayList<>();
-            
+
             for (Object[] task : taskList) {
                 Map<String, Object> taskData = new HashMap<>();
                 taskData.put("taskId", task[0]);
@@ -102,19 +72,19 @@ public class ProjectService {
                 taskData.put("assignedUsers", task[5]);
                 tasks.add(taskData);
             }
-            
+
             Map<String, Object> projectData = new HashMap<>();
             projectData.put("projectId", projectId);
             projectData.put("projectName", project[1]);
             projectData.put("leaderName", project[2]);
             projectData.put("tasks", tasks);
-            
+
             result.add(projectData);
         }
-    
+
         return result;
     }
-    
+
     public Boolean deleteProject(Long id){
         try {
             projectRepository.deleteById(id);
@@ -123,6 +93,36 @@ public class ProjectService {
         catch (Exception e) {
             return false;
         }
+    }
+
+    public ProjectModel modifyProject(Long id, ProjectDto project) {
+        ProjectModel projectModel = projectRepository.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
+
+        projectModel.setName(project.getName());
+        projectModel.setDescription(project.getDescription());
+        projectModel.setStartDate(project.getStartDate());
+        projectModel.setEndDate(project.getEndDate());
+
+        if (project.getUserLeaderId() == null) {
+            throw new RuntimeException("Leader ID must not be null");
+        }
+
+        Optional<UserModel> optionalUser = iUserRepository.findById(project.getUserLeaderId());
+        if (optionalUser.isPresent()) {
+            projectModel.setUserLeader(optionalUser.get());
+        } else {
+            throw new RuntimeException("User not found with id: " + project.getUserLeaderId());
+        }
+
+        if (project.getUserIds() != null && !project.getUserIds().isEmpty()) {
+            List<UserModel> users = iUserRepository.findAllById(project.getUserIds());
+            projectModel.setAssignadosUsers(users);
+        } else {
+            projectModel.setAssignadosUsers(Collections.emptyList());
+        }
+
+        projectRepository.saveAndFlush(projectModel);
+        return projectModel;
     }
 }
 

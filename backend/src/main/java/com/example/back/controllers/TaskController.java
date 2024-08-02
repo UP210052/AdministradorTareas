@@ -2,7 +2,9 @@ package com.example.back.controllers;
 
 import java.util.*;
 
+import com.example.back.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.back.dto.TaskDto;
@@ -32,7 +34,7 @@ public class TaskController {
     public List<Object[]> getTaskDone(){
         return this.taskService.getTaskDone();
     }
-    
+
     @GetMapping("/toDo/{id}")
     public List<Object[]> getTaskToDoByUser(@PathVariable("id") Long id){
         return this.taskService.getTaskToDoByUser(id);
@@ -48,23 +50,36 @@ public class TaskController {
         return this.taskService.saveTask(task);
     }
     @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping(path = "/{id}")
-    public TaskModel updateTask(@RequestBody TaskDto task, @PathVariable("id") Long id){
-        return this.taskService.updateTask(task, id);
-    }
-    
-    @PutMapping(path = "status/{id}")
-    public TaskModel setDoneTask(@PathVariable("id") Long id){
-        return this.taskService.updateStatusTask(id);
+    public ResponseEntity<TaskModel> updateTask(@RequestBody TaskDto task, @PathVariable("id") Long id){
+        TaskModel updatedTask = this.taskService.updateTask(task, id);
+        if (updatedTask == null) {
+            throw new NotFoundException("La tarea con id " + id + " no existe.");
+        }
+        return ResponseEntity.ok(updatedTask);
     }
 
-    @GetMapping(path = "/{id}")
-    public TaskDto getTaskById(@PathVariable("id") Long id){
-        return this.taskService.getTaskById(id);
+    @PutMapping(path = "status/{id}")
+    public ResponseEntity<TaskModel> setDoneTask(@PathVariable("id") Long id){
+        TaskModel updatedTask = this.taskService.updateStatusTask(id);
+        if (updatedTask == null) {
+            throw new NotFoundException("La tarea con id " + id + " no existe.");
+        }
+        return ResponseEntity.ok(updatedTask);
+    }
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable("id") Long id){
+        TaskDto taskDto = this.taskService.getTaskById(id);
+        if (taskDto == null) {
+            throw new NotFoundException("La tarea con id " + id + " no existe.");
+        }
+        return ResponseEntity.ok(taskDto);
     }
 
     @DeleteMapping(path = "/{id}")
-    public Boolean deleteTask(@PathVariable("id") Long id) {
-        return this.taskService.deleteTask(id);
+    public ResponseEntity<Boolean> deleteTask(@PathVariable("id") Long id) {
+        boolean deleted = this.taskService.deleteTask(id);
+        if (!deleted) {
+            throw new NotFoundException("La tarea con id " + id + " no existe.");
+        }
+        return ResponseEntity.ok(true);
     }
 }

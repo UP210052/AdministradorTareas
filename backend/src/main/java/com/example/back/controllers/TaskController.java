@@ -44,12 +44,12 @@ public class TaskController {
     public List<Object[]> getTaskDoneByUser(@PathVariable("id") Long id){
         return this.taskService.getTaskDoneByUser(id);
     }
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping
     public TaskModel saveTask(@RequestBody TaskDto task) {
         return this.taskService.saveTask(task);
     }
-    @CrossOrigin(origins = "http://localhost:3000")
+
     public ResponseEntity<TaskModel> updateTask(@RequestBody TaskDto task, @PathVariable("id") Long id){
         TaskModel updatedTask = this.taskService.updateTask(task, id);
         if (updatedTask == null) {
@@ -66,6 +66,7 @@ public class TaskController {
         }
         return ResponseEntity.ok(updatedTask);
     }
+    @GetMapping(path = "/{id}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable("id") Long id){
         TaskDto taskDto = this.taskService.getTaskById(id);
         if (taskDto == null) {

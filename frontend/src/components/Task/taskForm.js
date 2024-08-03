@@ -98,14 +98,13 @@ const TaskForm = ({ taskData, actionType, confirmFunction, closeFunction }) => {
 
     return (
         <Modal open={true} onClose={closeFunction} aria-labelledby="task-form-title" aria-describedby="task-form-description">
-
             <Box
                 sx={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: 500,
+                    width: { xs: '90%', md: 500 },
                     bgcolor: 'background.paper',
                     p: 3,
                     boxShadow: 24,
@@ -138,7 +137,7 @@ const TaskForm = ({ taskData, actionType, confirmFunction, closeFunction }) => {
                         InputProps={{ style: { fontSize: '0.875rem' } }}
                     />
                     <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 label="Start Date"
                                 id="startDate"
@@ -151,7 +150,7 @@ const TaskForm = ({ taskData, actionType, confirmFunction, closeFunction }) => {
                                 InputProps={{ style: { fontSize: '0.875rem' } }}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 label="End Date"
                                 id="endDate"
@@ -166,7 +165,7 @@ const TaskForm = ({ taskData, actionType, confirmFunction, closeFunction }) => {
                         </Grid>
                     </Grid>
                     <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <FormControl fullWidth margin="normal">
                                 <InputLabel id="status-label" style={{ fontSize: '0.875rem' }}>Status</InputLabel>
                                 <Select
@@ -181,7 +180,7 @@ const TaskForm = ({ taskData, actionType, confirmFunction, closeFunction }) => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <FormControl fullWidth margin="normal">
                                 <InputLabel id="projectId-label" style={{ fontSize: '0.875rem' }}>Project ID</InputLabel>
                                 <Select
@@ -209,7 +208,7 @@ const TaskForm = ({ taskData, actionType, confirmFunction, closeFunction }) => {
                             style={{ fontSize: '0.875rem' }}
                             value={formData.userIds}
                             onChange={handleMultipleChange("userIds")}
-                            defaultValue={[]} 
+                            defaultValue={[]}
                         >
                             {users.map((user) => (
                                 <MenuItem key={user[0]} value={user[0]} style={{ fontSize: '0.875rem' }}>

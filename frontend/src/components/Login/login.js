@@ -51,7 +51,7 @@ const Login = () => {
   const [invalidLogin, setInvalidLogin] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
-  const { updateTask } = useTaskContext;
+  const { updateTask } = useTaskContext();
   const navigate = useNavigate(); // Hook para la navegación
 
   const handleLogin = async (event) => {
@@ -110,7 +110,6 @@ const Login = () => {
               autoComplete="email"
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
-              // InputLabelProps={{ style: { color: '#fff' } }} // Color de la etiqueta en modo oscuro
             />
             <TextField
               margin="normal"
@@ -122,7 +121,6 @@ const Login = () => {
               id="password"
               autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
-              // InputLabelProps={{ style: { color: '#fff' } }} // Color de la etiqueta en modo oscuro
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -136,18 +134,6 @@ const Login = () => {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2" color="primary">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2" color="primary">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

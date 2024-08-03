@@ -87,7 +87,7 @@ const TaskToDo = () => {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Task To Do
                         </Typography>
-                        <Fab color="secondary" aria-label="add" size="small" onClick={handleOpenForm}> 
+                        <Fab sx={{ backgroundColor: '#0E13B2', color: 'white', '&:hover': { backgroundColor: '#0A0E8C',} }} aria-label="add" size="small" onClick={handleOpenForm}> 
                         <AddIcon />
                         </Fab>
                     </Toolbar>

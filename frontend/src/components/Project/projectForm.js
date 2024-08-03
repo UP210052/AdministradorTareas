@@ -96,7 +96,7 @@ const ProjectForm = ({ projectData, actionType, confirmFunction, closeFunction }
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: 500,
+                    width: { xs: '90%', md: 500 },
                     bgcolor: 'background.paper',
                     p: 3,
                     boxShadow: 24,
@@ -129,7 +129,7 @@ const ProjectForm = ({ projectData, actionType, confirmFunction, closeFunction }
                         InputProps={{ style: { fontSize: '0.875rem' } }}
                     />
                     <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 label="Start Date"
                                 id="startDate"
@@ -142,7 +142,7 @@ const ProjectForm = ({ projectData, actionType, confirmFunction, closeFunction }
                                 InputProps={{ style: { fontSize: '0.875rem' } }}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 label="End Date"
                                 id="endDate"

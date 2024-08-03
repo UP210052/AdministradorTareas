@@ -37,6 +37,11 @@ public class UserController {
         return this.userService.saveUser(user);
     }
 
+    @GetMapping("/id")
+    public List<Object[]> getIdUsers() {
+        return this.userService.getIdUsers();
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<UserModel> getUserById(@PathVariable("id") Long id) {
         Optional<UserModel> userOpt = this.userService.getById(id);
@@ -115,11 +120,5 @@ public class UserController {
         List<UserModel> users = userService.getUsers();
         return userService.getSortedUserNames(users);
     }
-    
-    @GetMapping("/id")
-    public List<Object[]> getIdUsers() {
-        return this.userService.getIdUsers();
-    }
-
 
 }

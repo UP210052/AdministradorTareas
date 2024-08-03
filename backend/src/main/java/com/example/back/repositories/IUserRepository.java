@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface IUserRepository extends JpaRepository<UserModel, Long> {
     Optional<UserModel> findByEmail(String email);
+    
     @Query(value = "SELECT id, name FROM usuarios;",nativeQuery = true)
     List<Object[]> getIdUsers();
 }

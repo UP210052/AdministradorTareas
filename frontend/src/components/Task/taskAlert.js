@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const TaskAlert = ({ description, actionType, confirmFunction, closeFunction }) => {
   return (
     <div className="modal fade show" tabIndex="-1" style={{ display: 'block' }}>
-        <div className="modal-dialog" >
+        <div className="modal-dialog" style={{ marginTop: '100px' }}>
             <div className="modal-content" style={{ backgroundColor: '#00000' }}>
                 <div className="modal-header">
                     <h5 className="modal-title">Alert</h5>

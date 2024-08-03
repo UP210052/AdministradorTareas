@@ -54,7 +54,7 @@ class ProjectView extends React.Component {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             Projects Overview
                         </Typography>
-                        <Fab color="primary" aria-label="add" size="small" onClick={() => this.handleDialogOpen('add')}>
+                        <Fab sx={{ backgroundColor: '#0E13B2', color: 'white', '&:hover': { backgroundColor: '#0A0E8C',} }} aria-label="add" size="small" onClick={() => this.handleDialogOpen('add')}>
                             <AddIcon />
                         </Fab>
                     </Toolbar>

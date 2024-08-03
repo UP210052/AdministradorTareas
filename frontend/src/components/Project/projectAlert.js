@@ -6,7 +6,7 @@ const ConfirmDeleteModal = ({ open, onClose, onConfirm }) => {
 
     return (
         <div className="modal fade show" tabIndex="-1" style={{ display: 'block' }}>
-            <div className="modal-dialog">
+            <div className="modal-dialog" style={{ marginTop: '100px' }}>
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Alert</h5>

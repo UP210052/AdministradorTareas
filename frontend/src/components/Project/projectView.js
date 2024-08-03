@@ -6,13 +6,6 @@ import ProjectForm from './projectForm';
 import { projectApiService } from '../../api';
 
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 
 class ProjectView extends React.Component {
     constructor(props) {
@@ -55,12 +48,13 @@ class ProjectView extends React.Component {
 
         return (
             <div>
+                <br/>
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             Projects Overview
                         </Typography>
-                        <Fab color="secondary" aria-label="add" size="small" onClick={() => this.handleDialogOpen('add')}>
+                        <Fab color="primary" aria-label="add" size="small" onClick={() => this.handleDialogOpen('add')}>
                             <AddIcon />
                         </Fab>
                     </Toolbar>

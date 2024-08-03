@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import { DataGrid } from "@mui/x-data-grid";
 import { taskApiService } from '../../api';
-import TaskAlert from './taskAlert';  // Asegúrate de importar TaskAlert
+import TaskAlert from './taskAlert'; 
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { useTaskContext } from '../../context/TaskContext';
 

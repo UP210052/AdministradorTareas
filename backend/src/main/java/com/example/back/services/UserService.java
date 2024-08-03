@@ -105,4 +105,8 @@ public class UserService {
                 .sorted() //
                 .collect(Collectors.toList());
     }
+  
+    public List<Object[]> getIdUsers(){
+        return userRepository.getIdUsers();
+    }
 }

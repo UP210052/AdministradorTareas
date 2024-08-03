@@ -115,6 +115,11 @@ public class UserController {
         List<UserModel> users = userService.getUsers();
         return userService.getSortedUserNames(users);
     }
+    
+    @GetMapping("/id")
+    public List<Object[]> getIdUsers() {
+        return this.userService.getIdUsers();
+    }
 
 
 }

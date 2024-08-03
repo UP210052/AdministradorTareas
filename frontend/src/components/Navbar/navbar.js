@@ -1,13 +1,12 @@
 import React from 'react';
-import { AppBar, Toolbar, Button, IconButton } from '@mui/material';
+import { AppBar, Toolbar, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
+// import HomeIcon from '@mui/icons-material/Home';
 import TaskIcon from '@mui/icons-material/Assignment';
 import ProjectIcon from '@mui/icons-material/Work';
 import LoginIcon from '@mui/icons-material/Login';
 
 const menuItems = [
-
   {
     id: 2,
     name: 'Task',

@@ -54,4 +54,7 @@ public class UserService {
     public Optional<UserModel> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+    public List<Object[]> getIdUsers(){
+        return userRepository.getIdUsers();
+    }
 }

@@ -67,4 +67,9 @@ public class UserController {
 
     }
 
+    @GetMapping("/id")
+    public List<Object[]> getIdUsers() {
+        return this.userService.getIdUsers();
+    }
+
 }

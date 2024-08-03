@@ -6,10 +6,11 @@ import Navbar from '../Navbar';
 import TaskView from '../Task';
 import ProjectView from '../Project';
 import Login from '../Login';
+import NotFound from './NotFound';
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
   },
 });
 
@@ -23,6 +24,8 @@ function App() {
           <Route path="/Task" element={<TaskView />} />
           <Route path="/Project" element={<ProjectView />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </ThemeProvider>

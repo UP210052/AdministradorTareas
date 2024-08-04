@@ -14,13 +14,14 @@ services:
     ports:
       - "8080:${BACKEND_PORT}"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_HOST: db
-    entrypoint: ["./wait-for-it.sh", "db:3306", "--", "java", "-jar", "/app.jar"]
+    entrypoint: ["java", "-jar", "/app.jar"]
 
   db:
     image: mysql:latest

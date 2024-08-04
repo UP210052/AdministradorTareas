@@ -8,12 +8,8 @@ COPY ${JAR_FILE} app.jar
 # Install default-mysql-client
 RUN apt-get update && apt-get install -y default-mysql-client
 
-
-# Add wait-for-it script
-COPY wait-for-it.sh /wait-for-it.sh
-RUN chmod +x /wait-for-it.sh
-
+# Crear un grupo y un usuario para Spring
 RUN addgroup --system spring && adduser --system spring --ingroup spring
 USER spring:spring
 
-ENTRYPOINT ["./wait-for-it.sh", "db", "java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]

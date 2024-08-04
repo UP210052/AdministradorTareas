@@ -13,7 +13,7 @@ const getIdUsers = async () => {
     return data;
 };
 const login = async (loginRequest) => {
-    const response = await fetch(`http://24.199.100.105/:8080/auth/login`, {
+    const response = await fetch(`http://24.199.100.105:8080/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

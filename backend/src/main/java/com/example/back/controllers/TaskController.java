@@ -49,6 +49,7 @@ public class TaskController {
         return this.taskService.saveTask(task);
     }
 
+    @PutMapping("/{id}")
     public ResponseEntity<TaskModel> updateTask(@RequestBody TaskDto task, @PathVariable("id") Long id){
         TaskModel updatedTask = this.taskService.updateTask(task, id);
         if (updatedTask == null) {

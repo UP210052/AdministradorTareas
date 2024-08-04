@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.back.BackApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-08-04T07:51:16" hostname="DESKTOP-CD50042" time="0.665">
+<testsuite name="com.example.back.BackApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-08-04T07:56:13" hostname="DESKTOP-CD50042" time="0.677">
   <properties/>
-  <testcase name="contextLoads()" classname="com.example.back.BackApplicationTests" time="0.665"/>
-  <system-out><![CDATA[01:51:04.711 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.back.BackApplicationTests]: BackApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-01:51:04.872 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.back.BackApplication for test class com.example.back.BackApplicationTests
+  <testcase name="contextLoads()" classname="com.example.back.BackApplicationTests" time="0.677"/>
+  <system-out><![CDATA[01:56:02.168 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.back.BackApplicationTests]: BackApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+01:56:02.344 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.back.BackApplication for test class com.example.back.BackApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,16 +14,16 @@
 
  :: Spring Boot ::                (v3.3.1)
 
-2024-08-04T01:51:05.622-06:00  INFO 26940 --- [back] [    Test worker] com.example.back.BackApplicationTests    : Starting BackApplicationTests using Java 17.0.10 with PID 26940 (started by hec_r in C:\Users\hec_r\Desktop\AdministradorTareas\backend)
-2024-08-04T01:51:05.623-06:00  INFO 26940 --- [back] [    Test worker] com.example.back.BackApplicationTests    : No active profile set, falling back to 1 default profile: "default"
-2024-08-04T01:51:07.502-06:00  INFO 26940 --- [back] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-08-04T01:51:07.621-06:00  INFO 26940 --- [back] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 101 ms. Found 3 JPA repository interfaces.
-2024-08-04T01:51:08.517-06:00  INFO 26940 --- [back] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-08-04T01:51:08.635-06:00  INFO 26940 --- [back] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2024-08-04T01:51:08.712-06:00  INFO 26940 --- [back] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-08-04T01:51:09.256-06:00  INFO 26940 --- [back] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-08-04T01:51:09.302-06:00  INFO 26940 --- [back] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-08-04T01:51:12.755-06:00  WARN 26940 --- [back] [    Test worker] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+2024-08-04T01:56:03.182-06:00  INFO 4896 --- [back] [    Test worker] com.example.back.BackApplicationTests    : Starting BackApplicationTests using Java 17.0.10 with PID 4896 (started by hec_r in C:\Users\hec_r\Desktop\AdministradorTareas\backend)
+2024-08-04T01:56:03.184-06:00  INFO 4896 --- [back] [    Test worker] com.example.back.BackApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2024-08-04T01:56:04.671-06:00  INFO 4896 --- [back] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-04T01:56:04.782-06:00  INFO 4896 --- [back] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 94 ms. Found 3 JPA repository interfaces.
+2024-08-04T01:56:05.555-06:00  INFO 4896 --- [back] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-04T01:56:05.667-06:00  INFO 4896 --- [back] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-08-04T01:56:05.743-06:00  INFO 4896 --- [back] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-04T01:56:06.301-06:00  INFO 4896 --- [back] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-04T01:56:06.350-06:00  INFO 4896 --- [back] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-08-04T01:56:09.795-06:00  WARN 4896 --- [back] [    Test worker] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
 
 java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(java.sql.SQLException, String)" because the return value of "org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.sqlExceptionHelper()" is null
 	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:116) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
@@ -155,14 +155,14 @@ java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.Sql
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69) ~[gradle-worker.jar:na]
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74) ~[gradle-worker.jar:na]
 
-2024-08-04T01:51:12.810-06:00  WARN 26940 --- [back] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-08-04T01:51:14.243-06:00  INFO 26940 --- [back] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-08-04T01:51:14.248-06:00  INFO 26940 --- [back] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-08-04T01:51:14.719-06:00  INFO 26940 --- [back] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-08-04T01:51:14.908-06:00  WARN 26940 --- [back] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-08-04T01:51:15.184-06:00  INFO 26940 --- [back] [    Test worker] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-08-04T01:51:15.186-06:00  WARN 26940 --- [back] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-08-04T01:51:16.186-06:00  INFO 26940 --- [back] [    Test worker] com.example.back.BackApplicationTests    : Started BackApplicationTests in 10.995 seconds (process running for 13.153)
+2024-08-04T01:56:09.835-06:00  WARN 4896 --- [back] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-04T01:56:11.318-06:00  INFO 4896 --- [back] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-04T01:56:11.322-06:00  INFO 4896 --- [back] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-04T01:56:11.777-06:00  INFO 4896 --- [back] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-04T01:56:11.944-06:00  WARN 4896 --- [back] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-04T01:56:12.235-06:00  INFO 4896 --- [back] [    Test worker] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2024-08-04T01:56:12.237-06:00  WARN 4896 --- [back] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
+2024-08-04T01:56:13.195-06:00  INFO 4896 --- [back] [    Test worker] com.example.back.BackApplicationTests    : Started BackApplicationTests in 10.461 seconds (process running for 12.433)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

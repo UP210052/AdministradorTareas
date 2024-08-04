@@ -12,6 +12,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import { usersApiService } from '../../api';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import { useTaskContext } from '../../context/TaskContext';
 
 function Copyright(props) {
   return (
@@ -26,100 +33,126 @@ function Copyright(props) {
   );
 }
 
-const defaultTheme = createTheme();
+const darkTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-    };
-  }
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  handleSubmit = (event) => {
+const validateEmail = (email) => {
+  return emailRegex.test(email);
+};
+
+const Login = () => {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [invalidLogin, setInvalidLogin] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const [open, setOpen] = React.useState(false);
+  const { updateTask } = useTaskContext();
+  const navigate = useNavigate(); // Hook para la navegación
+
+  const handleLogin = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    this.setState({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    if (!validateEmail(email)) {
+      setInvalidLogin(true);
+      setErrorMessage('Invalid email format');
+      setOpen(true);
+      return;
+    }
+
+    try {
+      const data = await usersApiService.login({ email, password });
+      localStorage.setItem('loggedIn', 'true');
+      localStorage.setItem('token', data.token);
+      updateTask();
+      navigate('/task'); // Redirigir a /task
+    } catch (error) {
+      setInvalidLogin(true);
+      setErrorMessage('Invalid email or password');
+      setOpen(true);
+    }
   };
 
-  render() {
-    return (
-      <ThemeProvider theme={defaultTheme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box component="form" onSubmit={this.handleSubmit} noValidate sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-            </Box>
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
           </Box>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
-        </Container>
-      </ThemeProvider>
-    );
-  }
-}
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+
+        {/* Modal de Alerta */}
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Error</DialogTitle>
+          <DialogContent>
+            <Typography>{errorMessage}</Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
+    </ThemeProvider>
+  );
+};
+
 export default Login;

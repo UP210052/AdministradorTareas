@@ -1,0 +1,90 @@
+
+-- create database taskmanager;
+-- use taskmanager;
+
+
+-- Crear la tabla de Usuarios
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+-- Crear la tabla de Proyectos
+CREATE TABLE projects (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    start_date DATE,
+    end_date DATE,
+    leader_id INT,
+    FOREIGN KEY (leader_id) REFERENCES usuarios(id)
+);
+
+-- Crear la tabla de Tareas
+CREATE TABLE tasks (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    start_date DATE,
+    end_date DATE,
+    status VARCHAR(50),
+    project_id INT,
+    FOREIGN KEY (project_id) REFERENCES projects(id)
+);
+
+-- Crear la tabla intermedia para asignar proyectos a usuarios
+CREATE TABLE project_assignments (
+    project_id INT,
+    user_id INT,
+    PRIMARY KEY (project_id, user_id),
+    FOREIGN KEY (project_id) REFERENCES projects(id),
+    FOREIGN KEY (user_id) REFERENCES usuarios(id)
+);
+
+-- Crear la tabla intermedia para asignar tareas a usuarios
+CREATE TABLE task_assignments (
+    task_id INT,
+    user_id INT,
+    PRIMARY KEY (task_id, user_id),
+    FOREIGN KEY (task_id) REFERENCES tasks(id),
+    FOREIGN KEY (user_id) REFERENCES usuarios(id)
+);
+
+INSERT INTO usuarios (name, email, password, is_admin) VALUES
+('Alice Johnson', 'alice@example.com', '$2y$10$Q/7RVh1i1hFjpW6u3xH7i.XG4K9QVHgLkTj23I8K9iZ6b.o4SkLqC', TRUE),
+('Bob Smith', 'bob@example.com', '$2y$10$Q/7RVh1i1hFjpW6u3xH7i.XG4K9QVHgLkTj23I8K9iZ6b.o4SkLqC', FALSE),
+('Carol White', 'carol@example.com', '$2y$10$Q/7RVh1i1hFjpW6u3xH7i.XG4K9QVHgLkTj23I8K9iZ6b.o4SkLqC', FALSE),
+('David Brown', 'david@example.com', '$2y$10$Q/7RVh1i1hFjpW6u3xH7i.XG4K9QVHgLkTj23I8K9iZ6b.o4SkLqC', FALSE);
+
+
+INSERT INTO projects (name, description, start_date, end_date, leader_id) VALUES
+('Project Alpha', 'This is the first project.', '2024-01-01', '2024-06-30', 1),
+('Project Beta', 'This is the second project.', '2024-02-01', '2024-07-31', 2),
+('Project Gamma', 'This is the third project.', '2024-03-01', '2024-08-31', 3);
+
+
+INSERT INTO tasks (name, description, start_date, end_date, status, project_id) VALUES
+('Task 1', 'This is the first task for Project Alpha.', '2024-01-05', '2024-01-15', 'Pending', 1),
+('Task 2', 'This is the second task for Project Alpha.', '2024-01-16', '2024-01-30', 'Pending', 1),
+('Task 3', 'This is the first task for Project Beta.', '2024-02-05', '2024-02-15', 'Finished', 2),
+('Task 4', 'This is the second task for Project Beta.', '2024-02-16', '2024-02-28', 'Pending', 2),
+('Task 5', 'This is the first task for Project Gamma.', '2024-03-05', '2024-03-15', 'Pending', 3);
+
+INSERT INTO project_assignments (project_id, user_id) VALUES
+(1, 1),
+(1, 2),
+(2, 2),
+(2, 3),
+(3, 3),
+(3, 4);
+
+INSERT INTO task_assignments (task_id, user_id) VALUES
+(1, 1),
+(2, 2),
+(3, 2),
+(4, 3),
+(5, 4);
+
